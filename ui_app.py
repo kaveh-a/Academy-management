@@ -7,7 +7,6 @@ from datetime import datetime
 from openpyxl.styles import PatternFill, Border, Side, Alignment, Font
 from openpyxl.utils import get_column_letter
 from datetime import datetime
-# from excel_pdf_maker.excel_student_list import create_excel
 from db import *
 from manager_panel import *
 from pathlib import Path
@@ -35,7 +34,7 @@ def set_excel_style_simple(worksheet):
         for cell in row:
             cell.border = border
             cell.alignment = alignment
-            if cell.row == 1:  # هدر
+            if cell.row == 1: 
                 cell.fill = header_fill
     for col in worksheet.columns:
         max_length = 0
@@ -155,11 +154,11 @@ def main(page: ft.Page):
 
             for index, student in enumerate(students, start=1):
                 row_data = [
-                    index,  # ردیف
-                    student.get("student_code", ""),  # کد
-                    student.get("student_name", ""),  # نام
-                    student.get("student_grade", ""),  # پایه
-                    student.get("student_mobile", "")  # موبایل
+                    index,  
+                    student.get("student_code", ""),  
+                    student.get("student_name", ""),  
+                    student.get("student_grade", ""),  
+                    student.get("student_mobile", "") 
                 ]
                 sheet.append(row_data)
 
@@ -421,7 +420,7 @@ def main(page: ft.Page):
                 )
                 if success:
                     save_and_show("موفقیت", "دانش‌آموز با موفقیت اضافه شد")
-                    show_admin_panel("list")  # برگرد به لیست
+                    show_admin_panel("list") 
                 else:
                     show_message("خطا", "اضافه کردن دانش‌آموز ناموفق بود")
 
@@ -491,7 +490,7 @@ def main(page: ft.Page):
                     name=name_field.value,
                     family=family_field.value,
                     mobile=mobile_field.value,
-                    grade=grade_field.value  # ✅ اضافه شده
+                    grade=grade_field.value 
                 )
                 if success:
                     save_and_show("موفقیت", "ویرایش با موفقیت انجام شد")
@@ -509,7 +508,7 @@ def main(page: ft.Page):
                     name_field,
                     family_field,
                     mobile_field,
-                    grade_field,  # ✅ اضافه شده
+                    grade_field, 
                     ft.ElevatedButton("ذخیره تغییرات", on_click=update_student_handler, bgcolor=ft.colors.GREEN_400,
                                       color=ft.colors.WHITE)
                 ],
@@ -1086,7 +1085,6 @@ def main(page: ft.Page):
                 [
                     ft.Text("مدیریت کلاس‌های تخصصی", size=22, weight=ft.FontWeight.BOLD, color=text_color),
                     ft.Divider(),
-                    # ایجاد کلاس جدید
                     ft.Text("ایجاد کلاس جدید", size=18, weight=ft.FontWeight.BOLD, color=text_color),
                     ft.Row([class_name, teacher], spacing=10),
                     ft.Row([time, start_date, end_date], spacing=10),
