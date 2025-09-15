@@ -1,24 +1,21 @@
 import sqlite3
 import os
 
-# --- تنظیمات دیتابیس ---
 DB_PATH = "nihan_danesh.db"
 
 
 def get_connection():
     """اتصال به دیتابیس SQLite"""
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row  # برای دسترسی به ستون‌ها به صورت نام (مانند دیکشنری)
+    conn.row_factory = sqlite3.Row  
     return conn
 
 
 def init_db():
-    """ایجاد دیتابیس و جداول اگر وجود نداشته باشن"""
     if not os.path.exists(DB_PATH):
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
 
-        # جدول users
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 user_code INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,7 +25,6 @@ def init_db():
             )
         """)
 
-        # جدول students
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS students (
                 student_code INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,7 +36,6 @@ def init_db():
             )
         """)
 
-        # جدول special_classes
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS special_classes (
                 class_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,7 +47,6 @@ def init_db():
             )
         """)
 
-        # جدول presence
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS presence (
                 student_code INTEGER,
@@ -64,7 +58,6 @@ def init_db():
             )
         """)
 
-        # جدول payment
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS payment (
                 payment_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,7 +72,6 @@ def init_db():
             )
         """)
 
-        # جدول class_enrollments
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS class_enrollments (
                 enrollment_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -91,7 +83,6 @@ def init_db():
             )
         """)
 
-        # اضافه کردن کاربران نمونه
         cursor.execute("INSERT OR IGNORE INTO users (user_name, user_password, role) VALUES (?, ?, ?)",
                        ("admin", "admin", "admin"))
         cursor.execute("INSERT OR IGNORE INTO users (user_name, user_password, role) VALUES (?, ?, ?)",
@@ -148,7 +139,6 @@ def get_all_students():
 
 
 def add_student(name, family, mobile, grade, gender):
-    """افزودن دانش‌آموز جدید"""
     try:
         conn = get_connection()
         cursor = conn.cursor()
@@ -165,7 +155,6 @@ def add_student(name, family, mobile, grade, gender):
 
 
 def update_student(student_code, name, family, mobile, grade):
-    """ویرایش اطلاعات دانش‌آموز"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -184,7 +173,6 @@ def update_student(student_code, name, family, mobile, grade):
 
 
 def find_student_by_code(student_code):
-    """جستجوی دانش‌آموز بر اساس کد"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -208,7 +196,6 @@ def find_student_by_code(student_code):
 
 
 def create_special_class(name, teacher, time, start_date, end_date):
-    """ایجاد کلاس تخصصی جدید"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -226,7 +213,6 @@ def create_special_class(name, teacher, time, start_date, end_date):
 
 
 def get_all_special_classes():
-    """دریافت لیست تمام کلاس‌های تخصصی"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -243,12 +229,10 @@ def get_all_special_classes():
 
 
 def enroll_student_in_class(class_id, student_code):
-    """ثبت دانش‌آموز در کلاس (بدون تکراری بودن)"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
 
-        # چک کردن تکراری بودن
         cursor.execute("""
             SELECT COUNT(*) FROM class_enrollments 
             WHERE class_id = ? AND student_code = ?
@@ -257,7 +241,6 @@ def enroll_student_in_class(class_id, student_code):
         if count > 0:
             return False
 
-        # اضافه کردن
         cursor.execute("""
             INSERT INTO class_enrollments (class_id, student_code)
             VALUES (?, ?)
@@ -295,7 +278,6 @@ def get_students_in_class(class_id):
 
 
 def add_payment_to_presence(student_code, amount, date, time, payment_type, installments=None, description=None):
-    """افزودن پرداخت به جدول payment"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -314,7 +296,6 @@ def add_payment_to_presence(student_code, amount, date, time, payment_type, inst
 
 
 def get_payments_by_student_code(student_code):
-    """دریافت تمام پرداخت‌های یک دانش‌آموز"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
