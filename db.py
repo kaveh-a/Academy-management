@@ -252,7 +252,6 @@ def enroll_student_in_class(class_id, student_code):
 
 
 def get_students_in_class(class_id):
-    """دریافت لیست دانش‌آموزان یک کلاس"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
