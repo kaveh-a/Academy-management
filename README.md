@@ -1,3 +1,4 @@
+<<<<<<< HEAD
     # 🎓 Academy Management System
 
 A desktop application for managing students, payments, and class schedules in an educational institute. Built using [Flet](https://flet.dev/) with a simple and clean Persian (RTL) user interface and powered by SQLite for local data storage.
@@ -39,3 +40,6 @@ A desktop application for managing students, payments, and class schedules in an
 ---
 
 ## 🗂️ Project Structure (Example)
+=======
+# school-management
+>>>>>>> 9a94caa0fbfccfee11c328efd5a9f503f636ad0f
