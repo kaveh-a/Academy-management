@@ -5,7 +5,6 @@ DB_PATH = "nihan_danesh.db"
 
 
 def get_connection():
-    """اتصال به دیتابیس SQLite"""
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row  
     return conn
@@ -96,7 +95,6 @@ def init_db():
 
 
 def check_user_login(username, password):
-    """بررسی ورود کاربر"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -111,7 +109,6 @@ def check_user_login(username, password):
 
 
 def get_all_students():
-    """دریافت لیست تمام دانش‌آموزان"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
@@ -313,7 +310,6 @@ def get_payments_by_student_code(student_code):
 
 
 def get_all_payments():
-    """دریافت تمام پرداخت‌های کامل"""
     conn = get_connection()
     try:
         cursor = conn.cursor()
