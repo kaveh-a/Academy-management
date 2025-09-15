@@ -41,5 +41,5 @@ A desktop application for managing students, payments, and class schedules in an
 
 ## 🗂️ Project Structure (Example)
 =======
-# school-management
+# Academy-management
 >>>>>>> 9a94caa0fbfccfee11c328efd5a9f503f636ad0f
